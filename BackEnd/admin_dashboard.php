@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-
+// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
    
 }
 
-
+// Database connection
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
@@ -17,27 +17,40 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
+// Handle form submission for adding packages
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_package'])) {
     $admin_id = $_SESSION['admin_id'];
     $package_name = $_POST['package_name'];
     $package_description = $_POST['package_description'];
     $package_price = $_POST['package_price'];
     $package_category = $_POST['package_category'];
+    $category_type = $_POST['category_type']; // make sure this is coming from the form
     $package_image = $_FILES['package_image']['name'];
 
-   
+    // Handle image upload
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($package_image);
     move_uploaded_file($_FILES['package_image']['tmp_name'], $target_file);
 
-    $sql = "INSERT INTO packages (admin_id, package_name, package_description, package_price, package_category, package_image, status, created_at, updated_at) 
-            VALUES (?, ?, ?, ?, ?, ?, 'created', NOW(), NOW())";
+    $sql = "INSERT INTO packages 
+    (admin_id, package_name, package_description, package_price, package_category, category_type, package_image, status, created_at, updated_at) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW())"; // status=1 for active packages
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issdss", $admin_id, $package_name, $package_description, $package_price, $package_category, $target_file);
-    
+    $stmt->bind_param(
+        "issdsss", 
+        $admin_id, 
+        $package_name, 
+        $package_description, 
+        $package_price, 
+        $package_category, 
+        $category_type, 
+        $target_file
+    );
+
     if ($stmt->execute()) {
         $message = "Package added successfully!";
+        header("Location: admin_dashboard.php?message=" . urlencode($message));
     } else {
         $message = "Error adding package: " . $conn->error;
     }
@@ -45,30 +58,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_package'])) {
 }
 
 
+// Handle form submission for updating packages
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_package'])) {
     $package_id = $_POST['package_id'];
     $package_name = $_POST['package_name'];
     $package_description = $_POST['package_description'];
     $package_price = $_POST['package_price'];
     $package_category = $_POST['package_category'];
+    $category_type = $_POST['category_type']; // new column
     $package_image = $_FILES['package_image']['name'];
 
-
+    // Handle image upload if provided
     if ($package_image) {
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($package_image);
         move_uploaded_file($_FILES['package_image']['tmp_name'], $target_file);
-        $sql = "UPDATE packages SET package_name=?, package_description=?, package_price=?, package_category=?, package_image=?, status='updated', updated_at=NOW() WHERE package_id=?";
+
+        $sql = "UPDATE packages 
+                SET package_name=?, package_description=?, package_price=?, package_category=?, category_type=?, package_image=?, status=1, updated_at=NOW() 
+                WHERE package_id=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssdssi", $package_name, $package_description, $package_price, $package_category, $target_file, $package_id);
+        $stmt->bind_param(
+            "ssdsssi", 
+            $package_name, 
+            $package_description, 
+            $package_price, 
+            $package_category, 
+            $category_type, 
+            $target_file, 
+            $package_id
+        );
     } else {
-        $sql = "UPDATE packages SET package_name=?, package_description=?, package_price=?, package_category=?, status='updated', updated_at=NOW() WHERE package_id=?";
+        $sql = "UPDATE packages 
+                SET package_name=?, package_description=?, package_price=?, package_category=?, category_type=?, status=1, updated_at=NOW() 
+                WHERE package_id=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssdsi", $package_name, $package_description, $package_price, $package_category, $package_id);
+        $stmt->bind_param(
+            "ssdssi", 
+            $package_name, 
+            $package_description, 
+            $package_price, 
+            $package_category, 
+            $category_type, 
+            $package_id
+        );
     }
     
     if ($stmt->execute()) {
         $message = "Package updated successfully!";
+        header("Location: admin_dashboard.php?message=" . urlencode($message));
     } else {
         $message = "Error updating package: " . $conn->error;
     }
@@ -76,6 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_package'])) {
 }
 
 
+// Handle package deletion
 if (isset($_GET['delete_package'])) {
     $package_id = $_GET['delete_package'];
     $sql = "DELETE FROM packages WHERE package_id=?";
@@ -84,13 +123,14 @@ if (isset($_GET['delete_package'])) {
     
     if ($stmt->execute()) {
         $message = "Package deleted successfully!";
+        header("Location: admin_dashboard.php?message=" . urlencode($message));
     } else {
         $message = "Error deleting package: " . $conn->error;
     }
     $stmt->close();
 }
 
-
+// Fetch all packages for display
 $sql = "SELECT * FROM packages";
 $packages_result = $conn->query($sql);
 
@@ -105,11 +145,44 @@ $conn->close();
     <title>Admin Dashboard - Ceylon Panorama</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/admin_dahsboard.css" rel="stylesheet">
-    <script src="js/admin_dashboard.js" ></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        } 
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .dropdown-menu {
+            background-color: #2d3748;
+        }
+        .dropdown-item {
+            color: #ffffff;
+        }
+        .dropdown-item:hover {
+            background-color: #4a5568;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .btn-cta {
+            background-color: #3182ce;
+            color: white;
+            font-weight: bold;
+        }
+        .btn-cta:hover {
+            background-color: #2b6cb0;
+        }
+        .message-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
-    
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top w-100 px-5">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Ceylon Panorama Admin</a>
@@ -157,7 +230,7 @@ $conn->close();
             </div>
         <?php } ?>
 
-       
+        <!-- Add Package Form -->
         <div id="add-package" class="bg-white p-6 rounded shadow-md mb-6">
             <h2 class="text-2xl font-semibold mb-4">Add New Package</h2>
             <form method="POST" enctype="multipart/form-data" class="space-y-4">
@@ -173,14 +246,23 @@ $conn->close();
                     <label for="package_price" class="block text-sm font-medium">Price</label>
                     <input type="number" step="0.01" name="package_price" id="package_price" required class="mt-1 block w-full border rounded p-2">
                 </div>
-                <div>
-                    <label for="package_category" class="block text-sm font-medium">Category</label>
-                    <select name="package_category" id="package_category" required class="mt-1 block w-full border rounded p-2">
-                        <option value="budget">Nature</option>
-                        <option value="mid-range">Adventure</option>
-                        <option value="premium">Culture</option>
+                  <label for="package_category" class="block text-sm font-medium">Price Category</label>
+                    <select name="package_category" id="package_category" required>
+                        <option value="Budget">Budget</option>
+                        <option value="Mid-Range">Mid-Range</option>
+                        <option value="Premium">Premium</option>
                     </select>
                 </div>
+                <div>
+                    <label for="category_type" class="block text-sm font-medium">Category</label>
+                    <select name="category_type" id="category_type" required class="mt-1 block w-full border rounded p-2">
+                        <option value="nature">Nature</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="culture">Culture</option>
+                    </select>
+                </div>
+                <div>
+  
                 <div>
                     <label for="package_image" class="block text-sm font-medium">Image</label>
                     <input type="file" name="package_image" id="package_image" accept="image/*" class="mt-1 block w-full">
@@ -189,7 +271,7 @@ $conn->close();
             </form>
         </div>
 
-        
+        <!-- Update Package Form -->
         <div id="update-package" class="bg-white p-6 rounded shadow-md mb-6">
             <h2 class="text-2xl font-semibold mb-4">Update Package</h2>
             <form method="POST" enctype="multipart/form-data" class="space-y-4">
@@ -220,12 +302,20 @@ $conn->close();
                     <label for="update_package_price" class="block text-sm font-medium">Price</label>
                     <input type="number" step="0.01" name="package_price" id="update_package_price" required class="mt-1 block w-full border rounded p-2">
                 </div>
+                </div>
+                  <label for="package_category" class="block text-sm font-medium">Price Category</label>
+                    <select name="package_category" id="package_category" required>
+                        <option value="Budget">Budget</option>
+                        <option value="Mid-Range">Mid-Range</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
                 <div>
-                    <label for="update_package_category" class="block text-sm font-medium">Category</label>
-                    <select name="package_category" id="update_package_category" required class="mt-1 block w-full border rounded p-2">
-                        <option value="budget">Nature</option>
-                        <option value="mid-range">Adventure</option>
-                        <option value="premium">Culture</option>
+                    <label for="update_category_type" class="block text-sm font-medium">Category</label>
+                    <select name="category_type" id="update_category_type" required class="mt-1 block w-full border rounded p-2">
+                        <option value="nature">Nature</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="culture">Culture</option>
                     </select>
                 </div>
                 <div>
@@ -236,7 +326,7 @@ $conn->close();
             </form>
         </div>
 
-       
+        <!-- Display Packages -->
         <div id="view-packages" class="bg-white p-6 rounded shadow-md">
             <h2 class="text-2xl font-semibold mb-4">All Packages</h2>
             <table class="min-w-full bg-white">
@@ -275,9 +365,29 @@ $conn->close();
         </div>
     </div>
 
-    
+    <!-- Bootstrap 4 JS + jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script>
+        function loadPackageDetails(packageId) {
+            if (!packageId) return;
+            $.ajax({
+                url: 'get_package_details.php',
+                type: 'GET',
+                data: { package_id: packageId },
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    $('#update_package_name').val(data.package_name);
+                    $('#update_package_description').val(data.package_description);
+                    $('#update_package_price').val(data.package_price);
+                    $('#update_package_category').val(data.package_category);
+                    $('#package_id').val(data.package_id);
+                },
+                error: function() {
+                    alert('Error loading package details.');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
