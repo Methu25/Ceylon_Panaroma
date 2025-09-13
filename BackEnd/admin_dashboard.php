@@ -49,10 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_package'])) {
     );
 
     if ($stmt->execute()) {
-        $message = "Package added successfully!";
-        header("Location: admin_dashboard.php?message=" . urlencode($message));
+        $add_message = "Package added successfully!";
     } else {
-        $message = "Error adding package: " . $conn->error;
+        $add_message = "Error adding package: " . $conn->error;
     }
     $stmt->close();
 }
@@ -105,10 +104,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_package'])) {
     }
     
     if ($stmt->execute()) {
-        $message = "Package updated successfully!";
-        header("Location: admin_dashboard.php?message=" . urlencode($message));
+        $update_message = "Package updated successfully!";
     } else {
-        $message = "Error updating package: " . $conn->error;
+        $update_message = "Error updating package: " . $conn->error;
     }
     $stmt->close();
 }
@@ -122,10 +120,9 @@ if (isset($_GET['delete_package'])) {
     $stmt->bind_param("i", $package_id);
     
     if ($stmt->execute()) {
-        $message = "Package deleted successfully!";
-        header("Location: admin_dashboard.php?message=" . urlencode($message));
+        $delete_message = "Package deleted successfully!";
     } else {
-        $message = "Error deleting package: " . $conn->error;
+        $delete_message = "Error deleting package: " . $conn->error;
     }
     $stmt->close();
 }
@@ -145,41 +142,8 @@ $conn->close();
     <title>Admin Dashboard - Ceylon Panorama</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-        } 
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .dropdown-menu {
-            background-color: #2d3748;
-        }
-        .dropdown-item {
-            color: #ffffff;
-        }
-        .dropdown-item:hover {
-            background-color: #4a5568;
-        }
-        .card {
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: scale(1.02);
-        }
-        .btn-cta {
-            background-color: #3182ce;
-            color: white;
-            font-weight: bold;
-        }
-        .btn-cta:hover {
-            background-color: #2b6cb0;
-        }
-        .message-box {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-    </style>
+    <link href="css/admin_dashboard.css" rel="stylesheet">
+  
 </head>
 <body class="bg-gray-100">
     <!-- Navbar -->
@@ -221,12 +185,23 @@ $conn->close();
         </div>
     </nav>
 
-    <div class="container mx-auto p-6 mt-5 pt-5">
+   <div class="container mx-auto p-6 mt-5 pt-5">
         <h1 class="text-3xl font-bold mb-6 text-center">Admin Dashboard</h1>
 
-        <?php if (isset($message)) { ?>
+        <?php 
+        if (!empty($add_message)) { ?>
             <div class="message-box bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-center">
-                <?php echo $message; ?>
+                <?php echo $add_message; ?>
+            </div>
+        <?php } 
+        if (!empty($update_message)) { ?>
+            <div class="message-box bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-center">
+                <?php echo $update_message; ?>
+            </div>
+        <?php } 
+        if (!empty($delete_message)) { ?>
+            <div class="message-box bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 text-center">
+                <?php echo $delete_message; ?>
             </div>
         <?php } ?>
 
@@ -303,8 +278,8 @@ $conn->close();
                     <input type="number" step="0.01" name="package_price" id="update_package_price" required class="mt-1 block w-full border rounded p-2">
                 </div>
                 </div>
-                  <label for="package_category" class="block text-sm font-medium">Price Category</label>
-                    <select name="package_category" id="package_category" required>
+                  <label for="update_package_category" class="block text-sm font-medium">Price Category</label>
+                    <select name="update_package_category" id="update_package_category" required>
                         <option value="Budget">Budget</option>
                         <option value="Mid-Range">Mid-Range</option>
                         <option value="Premium">Premium</option>
