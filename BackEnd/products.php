@@ -69,6 +69,31 @@ $productsResult = $productsQuery->get_result();
             <p class="lead">From Our Hands to Yours: Authentically Sri Lankan</p>
         </div>
     </section>
+        <main>
+        <div class="packages-container">
+            <?php if($productsResult->num_rows > 0): ?>
+                <?php while($row = $productsResult->fetch_assoc()): ?>
+                <div class="package-card">
+                    <img src="<?= htmlspecialchars($row['product_image']); ?>" alt="<?= htmlspecialchars($row['product_name']); ?>">
+                    <h3><?= htmlspecialchars($row['product_name']); ?></h3>
+                    <p><?= htmlspecialchars($row['product_description']); ?></p>
+                    <p>Price: $<?= number_format($row['product_price'], 2); ?></p>
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <form method="GET" action="AddProductToCart.php">
+                            <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['product_id']); ?>">
+                            <input type="hidden" name="item_type" value="product">
+                            <button type="submit" class="btn-add-cart">Buy Now</button>
+                        </form>
+                    <?php else: ?>
+                        <a href="signin.php?redirect=products.php" class="btn-add-cart">Sign In to Buy</a>
+                    <?php endif; ?>
+                </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="no-packages">No products available at the moment.</p>
+            <?php endif; ?>
+        </div>
+    </main>
 
 
 
