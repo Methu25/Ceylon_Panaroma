@@ -1,34 +1,62 @@
 
-        body {
-            font-family: 'Arial', sans-serif;
-        } 
-        .navbar-brand {
-            font-weight: bold;
+        /* Ensure sidebar is fixed and full-height */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #343a40;
+            overflow-y: auto;
+            z-index: 1000;
         }
-        .dropdown-menu {
-            background-color: #2d3748;
+        /* Adjust main content to avoid overlap with sidebar */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
         }
-        .dropdown-item {
+        /* Navbar item styling */
+        .sidebar .nav-link {
+            color: #ffffff;
+            padding: 10px 15px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #495057;
+        }
+        .sidebar .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+        .sidebar .dropdown-item {
             color: #ffffff;
         }
-        .dropdown-item:hover {
-            background-color: #4a5568;
+        .sidebar .dropdown-item:hover {
+            background-color: #495057;
         }
-        .card {
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: scale(1.02);
+        /* Responsive: Stack sidebar and content on small screens */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+            }
         }
         .btn-cta {
-            background-color: #3182ce;
-            color: white;
-            font-weight: bold;
-        }
-        .btn-cta:hover {
-            background-color: #2b6cb0;
-        }
-        .message-box {
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    background-color: #007bff;
+    color: white;
+    border: none;
+    transition: background-color 0.3s;
+}
+.btn-cta:hover {
+    background-color: #0056b3;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    text-align: left;
+}

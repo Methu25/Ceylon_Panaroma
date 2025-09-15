@@ -1,4 +1,5 @@
- function loadPackageDetails(packageId) {
+
+        function loadPackageDetails(packageId) {
             if (!packageId) return;
             $.ajax({
                 url: 'get_package_details.php',
@@ -10,6 +11,7 @@
                     $('#update_package_description').val(data.package_description);
                     $('#update_package_price').val(data.package_price);
                     $('#update_package_category').val(data.package_category);
+                    $('#update_category_type').val(data.category_type);
                     $('#package_id').val(data.package_id);
                 },
                 error: function() {
@@ -17,5 +19,26 @@
                 }
             });
         }
+
+        function loadProductDetails(productId) {
+            if (!productId) return;
+            $.ajax({
+                url: 'get_product_details.php',
+                type: 'GET',
+                data: { product_id: productId },
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    $('#update_product_name').val(data.product_name);
+                    $('#update_product_description').val(data.product_description);
+                    $('#update_product_price').val(data.product_price);
+                    $('#update_product_category').val(data.product_category);
+                    $('#product_id').val(data.product_id);
+                },
+                error: function() {
+                    alert('Error loading product details.');
+                }
+            });
+        }
+
        
  
