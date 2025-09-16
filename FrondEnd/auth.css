@@ -1,0 +1,173 @@
+/* auth.css */
+
+/* Reset & basics */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.auth-container {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.signin-box {
+    width: 400px;
+    height: 450px;           /* Increased height by 50px */
+    margin: 60px auto 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
+    padding: 32px 28px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+/* Title */
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333333;
+}
+
+.signin-box h2 {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+/* Form elements */
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signin-box form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.auth-container label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #555555;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="password"],
+.auth-container select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    font-size: 0.95rem;
+    transition: border 0.2s ease;
+}
+
+.auth-container input:focus,
+.auth-container select:focus {
+    border-color: #0d1b2b;
+    outline: none;
+}
+
+/* Radio button group */
+.radio-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Submit button */
+.auth-container button {
+    padding: 12px;
+    background-color: #102132;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.auth-container button:hover {
+    background-color: #8dbdf1;
+}
+
+.signin-box button {
+    background-color: #102132;
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px 0;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 40%;
+    margin-top: 15px;
+    margin-bottom: 15px;     /* Space between button and container bottom set to 15px */
+    align-self: center;
+}
+
+/* Style for User and Admin toggle buttons inside .signin-box */
+.signin-box .btn,
+.signin-box .btn-outline-primary,
+.signin-box .btn-outline-secondary {
+    padding: 8px 18px;      /* Reduced height and width */
+    font-size: 0.95rem;     /* Slightly smaller text */
+    border-radius: 18px;
+}
+
+/* Links */
+.auth-container .links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-top: 10px;
+}
+
+.auth-container .links a {
+    color: #0c1621;
+    text-decoration: none;
+}
+
+.auth-container .links a:hover {
+    text-decoration: underline;
+}
+
+/* Error / Success messages */
+.auth-container .message {
+    text-align: center;
+    font-size: 0.9rem;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.signin-box .alert {
+    margin-bottom: 12px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+    .auth-container {
+        padding: 30px 20px;
+    }
+}
