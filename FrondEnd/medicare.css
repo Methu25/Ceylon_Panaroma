@@ -1,0 +1,71 @@
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero {
+    height: 60vh;
+    /* slightly smaller so the form overlaps nicely */
+    background-image: url('https://images.unsplash.com/photo-1588776814546-2c59c7c67e9d?auto=format&fit=crop&w=1470&q=80');
+    /* professional medical image */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+/* Overlay for readability */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* slightly lighter than transport overlay */
+    z-index: 1;
+}
+
+/* Hero Text */
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-sub {
+    font-size: 1.3rem;
+    margin-top: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Form Section */
+.form-section {
+    margin-top: -80px;
+    /* pulls form slightly over hero */
+    position: relative;
+    z-index: 5;
+}
+
+/* Booking Card */
+.booking-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar always on top */
+.navbar {
+    z-index: 10;
+    position: relative;
+}
