@@ -1,0 +1,351 @@
+/* Reset defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body */
+body {
+    background: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar placeholder */
+/* ================= NAVBAR ================= */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0.8rem 2rem;
+}
+
+.navbar .navbar-brand {
+    font-weight: 800;
+    font-size: 28px;
+    color: #464705;
+    margin-right: 3rem;
+}
+
+.navbar .nav-link {
+    color: #333;
+    font-weight: 500;
+    margin-left: 1.5rem;
+    transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #ecdd0a;
+}
+
+/* Dropdown menu */
+.navbar .dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item.active {
+    background-color: #ecca07;
+    color: #fff;
+}
+
+/* Cart image */
+.navbar img {
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* ================= HERO ================= */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    /* taller hero for more epic look */
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 72px;
+    /* space for fixed navbar */
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* gradient overlay for a more cinematic effect */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+    z-index: 0;
+    transition: all 0.5s ease;
+}
+
+.hero .hero-content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 900px;
+    padding: 0 20px;
+    animation: fadeInUp 1.2s ease-out forwards;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero h1 {
+    font-size: 4rem;
+    /* bigger, more epic */
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.75rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+}
+
+/* Container */
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* Dashboard Cards Container */
+/* ================= DASHBOARD CARDS CENTER & COLORS ================= */
+.dashboard-cards {
+    display: flex;
+    justify-content: center;
+    /* centers cards horizontally */
+    gap: 30px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #f0f4f8;
+    /* professional light color */
+    border-radius: 15px;
+    padding: 35px 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 280px;
+    text-align: center;
+}
+
+.card h6 {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card h2 {
+    font-size: 5rem;
+    /* bigger font for more epic numbers */
+    font-weight: 800;
+    color: #1f2937;
+}
+
+
+/* Professional Card Colors */
+.card.card-primary {
+    background: #4f86f7;
+    color: #fff;
+}
+
+.card.card-primary h2 {
+    color: #fff;
+}
+
+.card.card-success {
+    background: #bae4c4;
+    color: #f7f0f0;
+}
+
+.card.card-success h2 {
+    color: #e2d7d7;
+}
+
+.card.card-warning {
+    background: #ece2c7;
+    color: #fff;
+}
+
+.card.card-warning h2 {
+    color: #fff;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: #4f86f7;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #3b6fd1;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background: #34c759;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: #28a745;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+}
+
+.btn-outline-primary {
+    border: 1px solid #4f86f7;
+    color: #4f86f7;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: #4f86f7;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.btn-outline-danger {
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    background: transparent;
+}
+
+.btn-outline-danger:hover {
+    background: #ef4444;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    margin-bottom: 40px;
+}
+
+table thead {
+    background: #4f86f7;
+    color: #fff;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+table img {
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* Forms */
+form {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    margin-bottom: 30px;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    outline: none;
+    border-color: #4f86f7;
+    box-shadow: 0 0 0 3px rgba(79, 134, 247, 0.2);
+}
