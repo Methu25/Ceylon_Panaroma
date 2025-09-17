@@ -1,0 +1,97 @@
+/* Body background and font */
+body {
+    background-color: #f4f4f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Centered card container */
+.card {
+    border-radius: 12px;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 600px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Card hover effect */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Headings */
+.card h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333333;
+    font-weight: 600;
+}
+
+/* Form labels */
+.form-label {
+    font-weight: 500;
+    color: #555555;
+}
+
+/* Form inputs */
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: border-color 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Alerts */
+.alert {
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+/* Sign in link text */
+.card p {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.card a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .card {
+        margin: 20px;
+        padding: 20px;
+    }
+}
