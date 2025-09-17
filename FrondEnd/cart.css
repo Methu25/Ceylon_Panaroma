@@ -1,0 +1,195 @@
+/* General Body */
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #a9e8eb88;
+}
+
+/* Container for the cart */
+.cart-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Individual Cart Card */
+.cart-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.cart-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Cart item image */
+.cart-card img {
+    border-radius: 10px;
+    max-width: 100px;
+}
+
+/* Flex container for item info and actions */
+.cart-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Item details (name, price, total) */
+.cart-details {
+    flex: 1 1 200px;
+    padding: 10px;
+}
+
+/* Actions section (update/remove) */
+.cart-actions {
+    text-align: right;
+}
+
+/* Quantity input */
+.quantity-input {
+    width: 70px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Update button */
+.btn-update {
+    margin-right: 5px;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-update:hover {
+    background-color: #0b5ed7;
+}
+
+/* Remove button */
+.btn-remove {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-remove:hover {
+    background-color: #b02a37;
+}
+
+/* Grand total section */
+.grand-total {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Responsive adjustments */
+@media(max-width: 768px) {
+    .cart-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cart-actions {
+        text-align: center;
+        margin-top: 10px;
+    }
+}
+
+/* Custom Navbar */
+.custom-navbar {
+    background: linear-gradient(90deg, #0d1b2a, #1b263b);
+    padding: 0.6rem 1rem;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Brand styling */
+.custom-navbar .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8f9fa !important;
+}
+
+/* Nav links */
+.custom-navbar .nav-link {
+    color: #e9ecef !important;
+    margin: 0 8px;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+    color: #ffd700 !important;
+    /* gold highlight */
+}
+
+/* Dropdown menu */
+.custom-navbar .dropdown-menu {
+    background: #1b263b;
+    border: none;
+    border-radius: 6px;
+}
+
+.custom-navbar .dropdown-item {
+    color: #e9ecef;
+    transition: background 0.3s;
+}
+
+.custom-navbar .dropdown-item:hover {
+    background: #0d6efd;
+    color: #fff;
+}
+
+/* Cart icon */
+.custom-navbar img {
+    vertical-align: middle;
+    transition: transform 0.2s;
+}
+
+.custom-navbar img:hover {
+    transform: scale(1.1);
+}
+
+/* Dropdown menu styling */
+.custom-navbar .dropdown-menu {
+    background: #1b263b;
+    /* dark dropdown to match navbar */
+    border: none;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    /* little gap from navbar */
+    min-width: 180px;
+    /* keeps consistent width */
+}
+
+/* Dropdown items */
+.custom-navbar .dropdown-item {
+    color: #e9ecef;
+    font-size: 0.95rem;
+    padding: 10px 15px;
+    transition: background 0.3s, padding-left 0.3s;
+}
+
+.custom-navbar .dropdown-item:hover {
+    background: #0d6efd;
+    /* Bootstrap blue */
+    color: #fff;
+    padding-left: 20px;
+    /* slide-in effect */
+}
+
+/* Fix dropdown arrow alignment */
+.custom-navbar .dropdown-toggle::after {
+    margin-left: 6px;
+    vertical-align: middle;
+}
